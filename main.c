@@ -15,7 +15,6 @@ int main(){
     printf("%d",fptr2(45));
     return 0;
 }
-//sdfjsdlkfj
 //f(a,b,c)
 //g = curry(f, 1, a)
 //g(b,c)
