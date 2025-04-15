@@ -18,5 +18,5 @@ int main(){
 //f(a,b,c)
 //g = curry(f, 1, a)
 //g(b,c)
-
+//sdjkflsdfjdlskfjls
 //void * converts to anything automatically i think?
