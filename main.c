@@ -6,19 +6,13 @@ typedef long long int INT;
 extern void* (curry)(void *fptr, INT at, INT ac, ...);
 extern void* (execute_curry)(void *fptr, INT at, INT not_ac, ...);
 
-int add(int x, int y){return x+y;}
+int add(int x, int y, int z){return x+y+z;}
 
 int main(){
-    int (*fptr)(int, int);
+    //only works for one curry-execute_curry pair, so you cannot have curry(curry(...))
+    int (*fptr)(int, int, int);
     fptr = &add;
-    void *p = curry(&add, 2, 1, 34);
-    printf("%d\n", p);
-    //execute_curry(fptr2, 1, 1, (int)69);
-    printf("%d\n",execute_curry(p, 2, 1, 35));
+    void *p = curry(&add, 3, 1, 34);
+    printf("%d\n",execute_curry(p, 3, 2, 35, 31));
     return 0;
 }
-//f(a,b,c)
-//g = curry(f, 1, a)
-//g(b,c)
-
-//void * converts to anything automatically i think?
