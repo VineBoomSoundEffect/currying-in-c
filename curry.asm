@@ -76,14 +76,25 @@ execute_curry:
     push qword[rbp+32]
     mov rcx,0
     add rcx,16
-    add rcx,rbx
+
+find_size_curried_args:
+    cmp rbx,0
+    je end_find_size_curried_args
+    add rcx,8
+    sub rbx,1
+    jne find_size_curried_args
+end_find_size_curried_args:
+
 put_rest_in_heap:
     cmp qword[rbp+32],0
     je end_put_rest_in_heap
     add rcx,8
-    mov rdx,[rbp+32+rcx]
+    mov rdx,rcx
+    ;sub rdx,rbx
+    ;sub rdx,16
+    mov rdx,[rbp+8+rdx]
     mov rax,[rbp+16]
-    mov [rax+16+rcx],rdx
+    mov [rax+rcx],rdx
     sub qword[rbp+32],1
     jne put_rest_in_heap
 end_put_rest_in_heap:
@@ -111,7 +122,8 @@ end_find_size_again:
 call_with_args:
     cmp qword[rbp+32],0
     je end_call_with_args
-    push qword[rdx]
+    mov rax,[rbp+16]
+    push qword[rax+24+rdx]
     sub rdx,8
     sub qword[rbp+32],1
     jne call_with_args
@@ -123,9 +135,8 @@ end_call_with_args:
     mov rdx,[rax+32]
     mov r8,[rax+40]
     mov r9,[rax+48]
-    mov rax,[rax]
     sub rsp,32
-    call rax
+    call [rax]
     leave
     ret
 section .data

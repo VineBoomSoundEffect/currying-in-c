@@ -6,14 +6,15 @@ typedef long long int INT;
 extern void* (curry)(void *fptr, INT at, INT ac, ...);
 extern void* (execute_curry)(void *fptr, INT at, INT not_ac, ...);
 
-INT I(INT x){return x+1;}
+int add(int x, int y){return x+y;}
 
 int main(){
-    INT (*fptr)(INT);
-    fptr = &I;
-    void *fptr2 = curry(fptr, 1, 1, (INT)69/*, (INT)69, (INT)69*/);
-    //execute_curry(fptr2, 1, 1);
-    printf("%d",execute_curry(fptr2, 1, 0));
+    int (*fptr)(int, int);
+    fptr = &add;
+    void *p = curry(&add, 2, 1, 34);
+    printf("%d\n", p);
+    //execute_curry(fptr2, 1, 1, (int)69);
+    printf("%d\n",execute_curry(p, 2, 1, 35));
     return 0;
 }
 //f(a,b,c)
